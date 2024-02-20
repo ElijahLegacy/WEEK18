@@ -10,12 +10,21 @@ var cacheFiles = [
 // self refers to the browser window object
 // caches is a special cache storage object for service worker to save data
 // addOn allows the data to be sen tin chace storage in application
-self.addEventListener('install', (e) => {
-    console.log('[Service Worker] Install');
-    e.WaitUntil(
-        caches.open(cacheName).then((cache) => {
-            console.log('[Service Worker] Caching all the files...');
-            return cache.addAll(cacheFiles);
+// self.addEventListener('install', (e) => {
+    // console.log('[Service Worker] Install');
+    // e.WaitUntil(
+        // caches.open(cacheName).then((cache) => {
+            // console.log('[Service Worker] Caching all the files...');
+           //  return cache.addAll(cacheFiles);
+       // })
+  //  );
+//});
+
+self.addEventListener('fetch ', function (e) {
+    e.respondWith(
+        caches.match(e.request).then(function (r) {
+            console.log('[Service Worker] Caching all the files...'
+            + e.request.url);
         })
     );
 });
